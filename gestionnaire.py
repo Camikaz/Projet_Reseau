@@ -8,12 +8,17 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind(('',port))
 s.listen(5)
 
-def connexion_serveur(IP_serveur) :
+def connexion_serveur(IP_serveur,port_serveur) :
+  print "je me connecte a un serveur sur le port ",port_serveur
   s1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-  s1.connect((IP_serveur ,int(port+1)))
+  s1.connect((IP_serveur ,int(port_serveur)))
   s1.send("fais moi un calcul")
   answer = s1.recv(255)
   print answer
+  s.shutdown(1)
+  s.close()
+  print answer
+  
 
 def connexion_client(sockClient) :
   params = sockClient.recv(TAILLE_BLOC)
@@ -31,6 +36,8 @@ def connexion_client(sockClient) :
   print "a-t-on la confirmation du client ? ", confirmation
   if confirmation :
     print "on lance le calcul"
+    connexion_serveur("127.0.0.1",port+1)
+    connexion_serveur("127.0.0.1",port+2)
     
   sockClient.shutdown(1)
   sockClient.close()
