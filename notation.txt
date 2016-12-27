@@ -1,0 +1,66 @@
+
+		#############################	
+		Bareme de notation du projet
+		#############################
+
+
+
+
+
+1 - Rappel sur le travail demandé:
+
+	- Le projet de developpement d'une application reseau pour etre réalisé seul ou en groupe (max 4 personnes/groupe).
+	- Vous me remettrez votre travail par mail, sous la forme d'une archive "tar.gz". Seul un accusé/reception par mail 
+		de ma part attestera de la reception de votre travail !
+
+	- Contenu attendu :
+		- Le code source, un README d'utilisation/compilation/test. 
+		- Un rapport (maximum 5 pages) qui decrit:
+			- l'architecture logiciel
+			- les choix technologiques
+			- les interactions reseaux
+			- la formalisation des données transferées par le réseau
+			- les difficultés rencontrées
+			- ce que vous auriez aimé ajouter si vous n'avez pas eu le temps de le faire ...
+
+
+Deux sujets vous sont proposés (Démineur en reseau, batch manager). Vous pouvez définir votre propre sujet de projet 
+mais vous devez, au pralable, me le presenter rapidement pour que je puisse evaluer sa difficulté et le valider.
+
+
+
+2 - Notation du code du projet (exemple d'un démineur fonctionnel, à adapté aux autres projets):
+
+- creer une partie = 1 pts
+- joindre une partie = 1 pts
+- nbre joueurs = 1 pts
+- etat des parties adverses affiché en temps
+	Reels ou à chaque iteration du jeu = 3 pts
+- gestion/integration des threads + serveur réseau + 
+	protocole/modélisation des données transférées 
+	par socket = 4 pts
+- mainloop affichage IHM pour le démineur= 2 pts (c'est un bonus ! Il sera supprimé pour ne pas depasser la note maximale ...)
+- Pas de bug après test basique = 1 pts
+- Gestion des erreurs = 1 pts
+- Commentaires / explications du codes = 1 pts
+
+3 - Notation sur la partie Rapport : 
+- forme = 1 pts
+- manuel utilisateur serveur / client = 1 pts
+- description de l'architecture = 2 pts
+- retour d'experience (methode de travail en groupe, identification des difficultés techniques rencontrées, 
+	Processus de developpement, prototypage, test) = 1.5
+- reflexions sur les evolutions possibles du projet = 1.5
+
+
+Le bareme peut etre modifié, à la marge, mais ce sera en votre faveur.
+
+
+
+###########################################################
+# Les projets sont à remettre avant le 31 janvier, 23h59 
+# Si vous ne recevez pas un mail AR de ma part, recontactez 
+# moi 
+###########################################################
+
+
