@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿Groupe de 5 : Tristan, Théo, Hélène, Benoît, Camille
 
 	Sujet : Clusters de serveurs multithread pour des simulations de systèmes d'EDO
@@ -25,3 +26,31 @@ Remarques :
 - Serveur envoie un client une estimation du temps a prendre
 - Resultat final : portrait de phase (stabilité en fonction de la valeur du parametre testé)
 
+=======
+Groupe de 5 : Tristan, Théo, Hélène, Benoît, Camille
+
+	Sujet : Clusters de serveurs multithread pour des simulations de systèmes d'EDO
+
+Idée : simulation d'un système d'équa diff sur plusieurs serveurs.
+
+Le client envoie un système d'équa diff et ses variables fixées, et un "sets" de valeur pour une variable particulière.
+
+Le serveur "primaire"  accepte la requête, et renvoie le système, le sets, ainsi qu'une valeur de la variable particulière à chaque serveur "secondaire".
+Le serveur primaire doit gérer la répartition des calculs efficaement (en fonction du nombre de coeur).
+
+Les serveurs secondaires simulent le système d'equation pour les variables reçues (Runge_Kutta), et renvoie au serveur primaire son résultats (valeur ou graphe).
+
+Le serveur primaire met en forme les résultats et renvoie le tout au client.
+
+
+Remarques : 
+- les équations peuvent être à un certain format.
+- fabriquer plusieurs graphes (n(t),p(t),t) ou (n(t),p(t)) en multithreads
+- faire un truc un minimum graphique pour le client
+- Communication préalable entre serveurs primaire et secondaires pour connaitre le nombre de coeurs dispos. 
+	-> repartition du nombre de calculs en fonction des coeurs disponible par serveur secondaire, envois des calculs fragmentés 
+		(fonctionnement indépendant des serveurs secondaires)
+- Serveur primaire stock les resultats secondaires et envoie au client la synthese -> penser a la gestion des erreurs de calcul
+- Serveur envoie un client une estimation du temps a prendre
+- Resultat final : portrait de phase (stabilité en fonction de la valeur du parametre testé)
+>>>>>>> origin/master
