@@ -15,6 +15,8 @@ import pickle
 import os
 import threading
 
+from multiprocessing.pool import ThreadPool
+
 
 #//////////////////////// Programme ////////////////////////////////////////////
 #///////////////////////////////////////////////////////////////////////////////
@@ -30,7 +32,7 @@ tabThread = []
 
 def thread (tabThread, nombreServeurs, a_min, iterationsServStep):
 	loopEnd = True
-	
+	result=[]
 	while loopEnd:
 		
 		#Iteration selon le nombre de calculs
@@ -47,22 +49,13 @@ def thread (tabThread, nombreServeurs, a_min, iterationsServStep):
 			answer_bytes = tabThread[(i+1)%2].recv(TAILLE_BLOC)
 			answer = pickle.loads(answer_bytes)  #Transformation in table
 			print "Le port ", answer[0], " donne le resultat a = ", answer[1], ".\n"
+			result.append(answer[1])
 
-		"""
-		msg = socket.recv(1024)
-		print 'Reception reponse :', msg
-		if not msg:
-			socket.shutdown(0)
-			tabThread.remove(socket)
-			print 'Fin du thread, pas de donnees'
-			loopEnd = False
-		elif msg == 'end':
-			newSocket.shutdown(0)
-			tabThread.remove(socket)
-			print 'Fin du thread, end envoye' 
-			loopEnd = False
-		else :
-		"""	
+ 		loopEnd=False 
+ 		for i in range(nombreServeurs):
+			tabThread[i].send("end")
+		return result
+
 				
 
 	#return msg
@@ -92,10 +85,13 @@ def connexion_serveur(IP_serveur, nombreServeurs, iterationsServStep, a_min) :
 		print "Je me connecte a ce serveur sur le port ",numPort, "."
 	
 	#///// Lancement des calculs par ces threads /////
-	t = threading.Thread(target = thread, args = (tabThread,nombreServeurs,a_min,iterationsServStep,))
-	t.start()
-	stop = True
-	t.join()
+	pool = ThreadPool(processes=1)
+	async_result = pool.apply_async(thread, (tabThread,nombreServeurs,a_min,iterationsServStep))
+	#t = threading.Thread(target = thread, args = (tabThread,nombreServeurs,a_min,iterationsServStep,))
+	#t.start()
+	#stop = True
+	#t.join()
+	return async_result.get()
 		
 
 		
@@ -162,8 +158,11 @@ def connexion_client(sockClient) :
     #On pourrait ensuite attendre dans le gestionnaire qu'on ait connecte tous
     #les serveurs voulus avec un ok qui termine la tache.
     
-    connexion_serveur("127.0.0.1", nombreServeurs, iterationsServStep, a_min)
-    
+    results=connexion_serveur('127.0.0.1', nombreServeurs, iterationsServStep, a_min)
+    print(results)
+    results_bytes = pickle.dumps(results) #data loaded
+    sockClient.send(results_bytes)
+    print "Resultats envoyes au client"
     
     
 		
@@ -181,7 +180,10 @@ while True :
   print "Connexion avec le client etablie."
   connexion_client(sockClient)
   print "Fin de la connexion avec le client et de la procedure."
-  s.shutdown(1)
-  s.close()
+  break
+
+s.shutdown(1)
+s.close()
 
 
+#192.168.1.12
